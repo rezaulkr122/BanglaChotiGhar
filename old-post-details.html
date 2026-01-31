@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বাংলা চটি ঘর পোস্ট ডিটেইলস</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+     
+    <style>
+    /* 1) ল্যাটিন ইউনিকড রেঞ্জ (A‑Z, a‑z, সংখ্যা, সিম্বল) */
+        @font-face{
+          font-family:"SolaimanLipiTTF";          /* পছন্দসই নাম */
+          src:url("LiAlinurNobinUnicode.ttf") format("truetype");
+          font-weight:400;
+          font-style:normal;
+          unicode-range:U+0980-09FF;              /* বাংলা ইউনিকড ব্লক */
+        }
+        
+        @font-face{
+          font-family:"SolaimanLipiTTF";
+          src:url("Daughter of Fortune.otf") format("truetype");
+          font-weight:400;
+          font-style:normal;
+          unicode-range:U+0000-00FF; /* ল্যাটিন */
+        }
+        
+        body {
+            font-family: 'SolaimanLipi', Arial, sans-serif !important;
+        }
+        .header { 
+      background-color: #f8f9fa; 
+      padding: 0px 0px 10px 0px; 
+      border-bottom: 1px solid #e9ecef; 
+      border-radius: 0px 0px 15px 15px;
+    }
+        .logo {
+            height: 50px;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 8px;
+            border-radius: 20px;
+            border: 1px solid #ced4da;
+        }
+        .post-thumbnail {
+            width: auto;
+            height: 400px;
+            max-width: 100%;
+            object-fit: contain;
+            margin: 0 auto 20px;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .extra-image {
+            width: auto;
+            height: 400px;
+            max-width: 100%;
+            object-fit: contain;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .post-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .post-content {
+            margin-bottom: 30px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .post-meta {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin: 30px 0;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+        .comment-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+        .comment-box {
+            margin-bottom: 30px;
+        }
+        .comment-form {
+            margin-bottom: 40px;
+        }
+        .comment {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .comment-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .comment-text {
+            margin-bottom: 5px;
+            color: #444;
+        }
+        .comment-time {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        .reply-btn {
+            font-size: 13px;
+            cursor: pointer;
+            color: #0d6efd;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .replies {
+            margin-left: 30px;
+            margin-top: 10px;
+            border-left: 3px solid #e9ecef;
+            padding-left: 15px;
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .social-icon {
+            color: white;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+        .social-icon:hover {
+            color: #adb5bd;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #adb5bd;
+        }
+        .show-more-btn {
+            display: block;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            color: #0d6efd;
+            font-weight: 500;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e9ecef;
+            margin: 20px 0;
+        }
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .notification-bar {
+            color: white;
+            background: black;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid #e0c04c;
+        }
+       #authorName{
+           animation:fadeSlide .6s ease-out .3s both;
+           color: red;
+           font-family: "SolaimanLipiTTF";
+       }
+       @keyframes fadeSlide{
+        from{opacity:0;transform:translateY(6px);}
+        to  {opacity:1;transform:translateY(0);}
+    }
+    /* Popup Modal Styles */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-content {
+    background-color: white;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.popup-header {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.popup-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.popup-body {
+    padding: 15px;
+    overflow-y: auto;
+    max-height: calc(70vh - 120px);
+}
+
+.popup-footer {
+    padding: 15px;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.popup-button {
+    padding: 8px 20px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.popup-button:hover {
+    background-color: #0b5ed7;
+}
+
+.post-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #0d6efd;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin: 20px 0;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.post-button:hover {
+  background-color: #0b5ed7;
+  color: white;
+}
+    </style>
+</head>
+<body>
+    <div class="notification-bar">
+  <marquee behavior="scroll" direction="left" scrollamount="5" id="notificationMarquee">
+    লোড হচ্ছে...
+  </marquee>
+</div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <img src="logo.png" alt="Website Logo" class="logo">
+                </div>
+                <div class="col-md-9">
+                    <div class="d-flex justify-content-end mb-2">
+                        <nav class="nav">
+                            <a class="nav-link" href="index.html">Home</a>
+                            <a class="nav-link" href="about.html">About</a>
+                            <a class="nav-link" href="contact.html">Contact Us</a>
+                        </nav>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <input type="text" class="search-bar" placeholder="Search posts..." id="searchInput">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Details -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Loading Spinner -->
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading post details...</p>
+                </div>
+                
+                <!-- ads div-->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="ad-container" id="postAdContainerTop" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                            <!-- Top Ads will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post Content -->
+                <div id="postContent" style="display: none;">
+                    <h1 class="post-title" id="postTitle"></h1>
+                    <img src="" alt="Post Thumbnail" class="post-thumbnail" id="postThumbnail">
+                    
+                    <div class="ratio ratio-16x9 mb-4" id="postVideoContainer" style="display: none;">
+                          <iframe id="postVideo" src="" title="Post Video" allowfullscreen></iframe>
+                        </div>
+                        
+                    <p class="text-end fw-semibold mb-2" id="postAuthor">
+                        <i class="fa-solid fa-user" style="--fa-primary-color: #666666; --fa-secondary-color: #666666; --fa-secondary-opacity: 1;"></i> by
+                        <span id="authorName"></span>
+                    </p>
+
+                    <div class="post-content" id="postDetails1"></div>
+                    <img src="" alt="Extra Image 1" class="extra-image" id="extraImage1">
+                    <!--ads-->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="ad-container" id="postAdContainerBottom" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                                <!-- Bottom Ads will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content" id="postDetails2"></div>
+                    <img src="" alt="Extra Image 2" class="extra-image" id="extraImage2">
+                    <div class="post-content" id="postDetails3"></div>
+                    
+                    <div id="postButtonContainer" style="text-align: center;"></div>
+                    
+                    <div class="post-meta">
+                        <div class="post-date" id="postDate"></div>
+                    </div>
+
+                    <!-- Comment Section -->
+                    <div class="comment-section">
+                        <h3 class="mb-4">মন্তব্য করুন</h3>
+                        <div class="comment-box">
+                            <form id="commentForm">
+                                <div class="mb-3">
+                                    <label for="commentName" class="form-label">আপনার নাম</label>
+                                    <input type="text" class="form-control" id="commentName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="commentText" class="form-label">মন্তব্য</label>
+                                    <textarea class="form-control" id="commentText" rows="3" required></textarea>
+                                </div>
+                                <input type="hidden" id="replyTo" value="">
+                                <button type="submit" class="btn btn-primary">পোস্ট করুন</button>
+                            </form>
+                        </div>
+                        
+                        <div class="divider"></div>
+                        
+                        <h3 class="mb-4">মন্তব্যসমূহ</h3>
+                        <div id="commentsContainer">
+                            <p>Loading comments...</p>
+                        </div>
+                        <div class="show-more-btn" id="showMoreComments" style="display: none;">আরো মন্তব্য দেখুন</div>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div class="alert alert-danger mt-4" id="errorMessage" style="display: none;">
+                    পোস্টটি পাওয়া যায়নি। <a href="index.html" class="alert-link">হোমপেজে ফিরে যান</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-icons" id="socialLinks"></div>
+            <div class="copyright">
+                &copy; <span id="currentYear"></span> BD choti Ghar. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Popup Modal -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h3 class="popup-title" id="popupTitle"></h3>
+            <button class="popup-close" id="popupClose">&times;</button>
+        </div>
+        <div class="popup-body">
+            <p id="popupMessage"></p>
+        </div>
+        <div class="popup-footer">
+            <a href="#" class="popup-button" id="popupButton" target="_blank"></a>
+        </div>
+    </div>
+</div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script>
+    // Firebase configuration
+    const firebaseConfig = {
+    apiKey: "AIzaSyDdHzg8bJfYqLcBdWQ4ISoFTSLYeGewq-Q",
+    authDomain: "bdchotighar.firebaseapp.com",
+    databaseURL: "https://bdchotighar-default-rtdb.firebaseio.com/",
+    projectId: "bdchotighar",
+    storageBucket: "bdchotighar.firebasestorage.app",
+    messagingSenderId: "912869787682",
+    appId: "1:912869787682:web:4bde86333a8251df34e27b",
+    measurementId: "G-4YJ097ZKR4"
+};
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Telegram bot configuration
+    const telegramBotToken = '7605251936:AAEPVo7pdAgfDuySdoagNxZ-MkslMzECB7I';
+    const telegramChatId = '@chotiwebcomment';
+
+    // Get post ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+
+    // DOM elements
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const postContent = document.getElementById('postContent');
+    const errorMessage = document.getElementById('errorMessage');
+    const postTitle = document.getElementById('postTitle');
+    const postThumbnail = document.getElementById('postThumbnail');
+    const postDetails1 = document.getElementById('postDetails1');
+    const extraImage1 = document.getElementById('extraImage1');
+    const postDetails2 = document.getElementById('postDetails2');
+    const extraImage2 = document.getElementById('extraImage2');
+    const postDetails3 = document.getElementById('postDetails3');
+    const postDate = document.getElementById('postDate');
+    const commentForm = document.getElementById('commentForm');
+    const commentName = document.getElementById('commentName');
+    const commentText = document.getElementById('commentText');
+    const replyTo = document.getElementById('replyTo');
+    const commentsContainer = document.getElementById('commentsContainer');
+    const showMoreCommentsBtn = document.getElementById('showMoreComments');
+    const socialLinksContainer = document.getElementById('socialLinks');
+    const currentYearSpan = document.getElementById('currentYear');
+
+    // Set current year
+    currentYearSpan.textContent = new Date().getFullYear();
+
+    // Show loading spinner
+    loadingSpinner.style.display = 'block';
+
+    // URL validation function
+    function isValidHttpUrl(string) {
+        try {
+            const url = new URL(string);
+            return url.protocol === "http:" || url.protocol === "https:";
+        } catch (_) {
+            return false;  
+        }
+    }
+
+    // Telegram notification function with improved URL handling
+    async function sendTelegramNotification(commentData, isReply = false, replyToName = '') {
+        try {
+            // Create production URL
+            let postUrl = `https://bdchotighar.netlify.app/post-details.html?id=${postId}`;
+            
+            // Validate URL
+            if(!isValidHttpUrl(postUrl)) {
+                postUrl = 'https://bdchotighar.netlify.app/default-post.html';
+            }
+
+            let message = '';
+            if (isReply) {
+                message = `📨 *নতুন রিপ্লাই!*\n\n` +
+                          `_${replyToName}_ -এর কমেন্টে রিপ্লাই দিয়েছেন:\n\n` +
+                          `👤 Name: *${commentData.name}*\n` +
+                          `💬 Comment :
+                          ${commentData.text}\n\n` +
+                          `🔗 [পোস্ট দেখুন](${postUrl})`;
+            } else {
+                message = `💬 *নতুন মন্তব্য!*\n\n` +
+                          `👤 Name: *${commentData.name}*\n` +
+                          `💬 Comment :
+                          ${commentData.text}\n\n` +
+                          `🔗 [পোস্ট দেখুন](${postUrl})`;
+            }
+            
+            // First try with inline keyboard
+            const response = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: telegramChatId,
+                    text: message,
+                    parse_mode: 'Markdown',
+                    disable_web_page_preview: true,
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{
+                                text: '📖 পোস্টে যান',
+                                url: postUrl
+                            }]
+                        ]
+                    }
+                })
+            });
+
+            const data = await response.json();
+            
+            // If failed, try without inline keyboard
+            if (!data.ok && data.error_code === 400) {
+                await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: telegramChatId,
+                        text: message,
+                        parse_mode: 'Markdown',
+                        disable_web_page_preview: true
+                    })
+                });
+            }
+        } catch (error) {
+            console.error('Telegram error:', error);
+            // Log failed notifications to Firebase
+            database.ref('failedNotifications').push().set({
+                error: error.message,
+                commentData: commentData,
+                timestamp: Date.now()
+            });
+        }
+    }
+
+    // Load post details
+    function loadPostDetails() {
+        if (!postId) {
+            showError();
+            return;
+        }
+
+        database.ref(`posts/${postId}`).once('value', (snapshot) => {
+            const post = snapshot.val();
+            
+            if (!post) {
+                showError();
+                return;
+            }
+
+            loadingSpinner.style.display = 'none';
+            postContent.style.display = 'block';
+
+            postTitle.textContent = post.title || 'No Title';
+            postThumbnail.src = post.thumbnail || 'placeholder.jpg';
+            postDetails1.innerHTML = post.details1 || '';
+
+            if (post.extraImage1) {
+                extraImage1.src = post.extraImage1;
+                extraImage1.style.display = 'block';
+            } else {
+                extraImage1.style.display = 'none';
+            }
+
+            postDetails2.innerHTML = post.details2 || '';
+
+            if (post.extraImage2) {
+                extraImage2.src = post.extraImage2;
+                extraImage2.style.display = 'block';
+            } else {
+                extraImage2.style.display = 'none';
+            }
+
+            postDetails3.innerHTML = post.details3 || '';
+            postDate.textContent = new Date(post.timestamp || Date.now()).toLocaleString();
+            
+            if (post.videoUrl) {
+              const videoSrc = post.videoUrl.trim();
+              let videoEmbed = '';
+            
+              if (videoSrc.includes('youtube.com') || videoSrc.includes('dailymotion.com') || videoSrc.includes('drive.google.com')) {
+                videoEmbed = `<div class="ratio ratio-16x9"><iframe src="${videoSrc}" frameborder="0" allowfullscreen></iframe></div>`;
+              } else if (videoSrc.endsWith('.mp4') || videoSrc.includes('dropbox.com')) {
+                const safeLink = videoSrc.replace('?dl=0', '?raw=1');
+                videoEmbed = `<video controls controlsList="nodownload" width="100%"><source src="${safeLink}" type="video/mp4"></video>`;
+              }
+            
+              document.getElementById('postVideoContainer').innerHTML = videoEmbed;
+              document.getElementById('postVideoContainer').style.display = 'block';
+            }
+            
+            const authorName = post.author && post.author.trim() !== '' ? post.author : 'Admin';
+            document.getElementById('authorName').textContent = authorName;
+            
+            // Display post button if available
+            const postButtonContainer = document.getElementById('postButtonContainer');
+            if (post.buttonName && post.buttonLink) {
+                postButtonContainer.innerHTML = `
+                <a href="${post.buttonLink}" class="post-button" target="_blank">${post.buttonName}</a>
+              `;
+            } else {
+                postButtonContainer.innerHTML = '';
+            }
+
+            // Load comments
+            loadComments();
+        }, (error) => {
+            showError();
+            console.error("Error loading post:", error);
+        });
+    }
+
+    function showError() {
+        loadingSpinner.style.display = 'none';
+        postContent.style.display = 'none';
+        errorMessage.style.display = 'block';
+    }
+
+    // Handle comment submission
+    commentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = commentName.value.trim();
+        const text = commentText.value.trim();
+        const isReply = replyTo.value !== '';
+
+        if (name && text) {
+            const commentData = {
+                name,
+                text,
+                timestamp: Date.now(),
+                isReply: isReply
+            };
+
+            try {
+                if (isReply) {
+                    // Save reply
+                    const replyRef = database.ref(`comments/${postId}/${replyTo.value}/replies`).push();
+                    await replyRef.set(commentData);
+                    
+                    // Get parent comment data
+                    const parentSnapshot = await database.ref(`comments/${postId}/${replyTo.value}`).once('value');
+                    const parentData = parentSnapshot.val();
+                    
+                    // Send Telegram notification
+                    await sendTelegramNotification(commentData, true, parentData.name || 'Anonymous');
+                } else {
+                    // Save new comment
+                    const commentRef = database.ref(`comments/${postId}`).push();
+                    await commentRef.set(commentData);
+                    
+                    // Send Telegram notification
+                    await sendTelegramNotification(commentData);
+                }
+
+                commentForm.reset();
+                replyTo.value = '';
+                commentText.placeholder = "";
+                
+            } catch (error) {
+                console.error("Error saving comment:", error);
+                alert("কমেন্ট সাবমিট করতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
+            }
+        } else {
+            alert("দয়া করে নাম এবং কমেন্ট লিখুন।");
+        }
+    });
+
+    // Load comments
+    function loadComments(showAll = false) {
+        database.ref(`comments/${postId}`).once('value', (snapshot) => {
+            const comments = snapshot.val();
+            commentsContainer.innerHTML = '';
+            
+            if (!comments) {
+                commentsContainer.innerHTML = '<p>কোন মন্তব্য নেই। প্রথম মন্তব্য করুন!</p>';
+                showMoreCommentsBtn.style.display = 'none';
+                return;
+            }
+
+            let commentCount = 0;
+            const commentsArray = Object.entries(comments).sort((a, b) => b[1].timestamp - a[1].timestamp);
+
+            commentsArray.forEach(([commentId, comment]) => {
+                if (comment.isReply !== true) {
+                    commentCount++;
+
+                    if (!showAll && commentCount > 5) return;
+
+                    renderComment(commentId, comment);
+
+                    if (comment.replies) {
+                        const repliesContainer = document.createElement('div');
+                        repliesContainer.className = 'replies';
+
+                        Object.entries(comment.replies).sort((a, b) => a[1].timestamp - b[1].timestamp).forEach(([replyId, reply]) => {
+                            renderComment(replyId, reply, repliesContainer);
+                        });
+
+                        document.getElementById(`comment-${commentId}`).appendChild(repliesContainer);
+                    }
+                }
+            });
+
+            if (commentCount > 5 && !showAll) {
+                showMoreCommentsBtn.style.display = 'block';
+            } else {
+                showMoreCommentsBtn.style.display = 'none';
+            }
+
+            if (commentCount === 0) {
+                commentsContainer.innerHTML = '<p>কোন মন্তব্য নেই। প্রথম মন্তব্য করুন!</p>';
+            }
+        });
+    }
+
+    // Render a single comment
+    function renderComment(commentId, comment, container = commentsContainer) {
+        const commentElement = document.createElement('div');
+        commentElement.className = 'comment';
+        commentElement.id = `comment-${commentId}`;
+
+        const isReply = comment.isReply === true;
+
+        commentElement.innerHTML = `
+            <div class="comment-name">${comment.name || 'Anonymous'}</div>
+            <div class="comment-text">${comment.text}</div>
+            <div class="comment-time">${new Date(comment.timestamp).toLocaleString()}</div>
+            ${!isReply ? '<div class="reply-btn" data-comment-id="' + commentId + '">Reply</div>' : ''}
+        `;
+
+        container.appendChild(commentElement);
+
+        if (!isReply) {
+            const replyBtn = commentElement.querySelector('.reply-btn');
+            if (replyBtn) {
+                replyBtn.addEventListener('click', () => {
+                    replyTo.value = commentId;
+                    commentText.focus();
+                    commentText.placeholder = "Replying to " + (comment.name || 'Anonymous');
+                });
+            }
+        }
+    }
+
+    // Show all comments
+    showMoreCommentsBtn.addEventListener('click', () => {
+        loadComments(true);
+    });
+
+    // Load social links
+    function loadSocialLinks() {
+        database.ref('socialLinks').once('value', (snapshot) => {
+            const socialLinks = snapshot.val();
+            if (socialLinks) {
+                socialLinksContainer.innerHTML = '';
+                if (socialLinks.facebook) {
+                    socialLinksContainer.innerHTML += `<a href="${socialLinks.facebook}" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a>`;
+                }
+                if (socialLinks.instagram) {
+                    socialLinksContainer.innerHTML += `<a href="${socialLinks.instagram}" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>`;
+                }
+                if (socialLinks.telegram) {
+                    socialLinksContainer.innerHTML += `<a href="${socialLinks.telegram}" target="_blank" class="social-icon"><i class="fab fa-telegram"></i></a>`;
+                }
+                if (socialLinks.whatsapp) {
+                    socialLinksContainer.innerHTML += `<a href="${socialLinks.whatsapp}" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>`;
+                }
+            }
+        });
+    }
+
+    // Setup real-time comment updates
+    function setupRealtimeComments() {
+        database.ref(`comments/${postId}`).on('child_added', () => loadComments());
+        database.ref(`comments/${postId}`).on('child_changed', () => loadComments());
+        database.ref(`comments/${postId}`).on('child_removed', () => loadComments());
+    }
+
+    // Notification Real-time Load
+    function setupRealtimeNotification() {
+      const notificationMarquee = document.getElementById('notificationMarquee');
+      if (!notificationMarquee) return;
+    
+      firebase.database().ref('notifications/latest').on('value', (snapshot) => {
+        const notification = snapshot.val();
+        if (notification && notification.text) {
+          notificationMarquee.textContent = notification.text;
+        } else {
+          notificationMarquee.textContent = 'কোনো নোটিফিকেশন নেই';
+        }
+      });
+    }
+    
+    // Popup Message Functionality
+function loadPopupMessage() {
+    database.ref('popupMessage').once('value', (snapshot) => {
+        const popupData = snapshot.val();
+        if (popupData && popupData.enabled) {
+            const popupOverlay = document.getElementById('popupOverlay');
+            const popupTitle = document.getElementById('popupTitle');
+            const popupMessage = document.getElementById('popupMessage');
+            const popupButton = document.getElementById('popupButton');
+            const popupClose = document.getElementById('popupClose');
+            
+            popupTitle.textContent = popupData.title || 'নোটিশ';
+            popupMessage.textContent = popupData.message || '';
+            
+            if (popupData.buttonText && popupData.buttonLink) {
+                popupButton.textContent = popupData.buttonText;
+                popupButton.href = popupData.buttonLink;
+                popupButton.style.display = 'inline-block';
+            } else {
+                popupButton.style.display = 'none';
+            }
+            
+            popupOverlay.classList.add('active');
+            
+            popupClose.addEventListener('click', () => {
+                popupOverlay.classList.remove('active');
+            });
+        }
+    });
+}
+
+// ভিজিট ট্র্যাক করুন
+function trackVisit(postId = null) {
+    const today = new Date().toISOString().split('T')[0];
+    const updates = {};
+    
+    // টোটাল ভিজিট
+    updates['visitorStats/totalVisits'] = firebase.database.ServerValue.increment(1);
+    
+    // ডেইলি ভিজিট
+    updates[`visitorStats/dailyVisits/${today}`] = firebase.database.ServerValue.increment(1);
+    
+    // পোস্ট ভিজিট (যদি পোস্ট আইডি থাকে)
+    if (postId) {
+        updates[`visitorStats/postVisits/${postId}`] = firebase.database.ServerValue.increment(1);
+    }
+    
+    // সর্বশেষ আপডেট টাইম
+    updates['visitorStats/lastUpdated'] = new Date().toISOString();
+    
+    // সব আপডেট একসাথে করুন
+    firebase.database().ref().update(updates);
+}
+
+// পোস্ট ডিটেইলস পেজে কল করুন (post-details.html)
+if (postId) {
+  trackVisit(postId);
+}
+
+
+  // Load and display ads for post details page
+  function loadAndDisplayPostAds() {
+      const adContainerTop = document.getElementById('postAdContainerTop');
+      const adContainerBottom = document.getElementById('postAdContainerBottom');
+      
+      database.ref('ads').once('value', (snapshot) => {
+          const ads = snapshot.val();
+          
+          if (ads) {
+              // Filter ads that should appear on post details page
+              const postAds = Object.entries(ads).filter(([_, ad]) =>
+                  ad.position === 'both' || ad.position === 'post'
+              );
+              
+              if (postAds.length > 0) {
+                  // For Top Ad - Select a random ad
+                  const randomAdTop = postAds[Math.floor(Math.random() * postAds.length)][1];
+                  
+                  // Create ad HTML for Top Ad
+                  let adHtmlTop = '';
+                  if (randomAdTop.type === 'video') {
+                      adHtmlTop = `
+            <a href="${randomAdTop.link}" target="_blank" style="display: block;">
+              <video autoplay loop muted playsinline style="width: 100%; max-height: 300px; border-radius: 5px;">
+                <source src="${randomAdTop.image}" type="video/mp4">
+              </video>
+            </a>
+          `;
+                  } else {
+                      adHtmlTop = `
+            <a href="${randomAdTop.link}" target="_blank" style="display: block;">
+              <img src="${randomAdTop.image}" style="width: 100%; max-height: 300px; object-fit: contain; border-radius: 5px;">
+            </a>
+          `;
+                  }
+                  
+                  adContainerTop.innerHTML = adHtmlTop;
+                  
+                  // For Bottom Ad - Select another random ad (different from top ad)
+                  let remainingAds = postAds.filter(([id, _]) => id !== randomAdTop.id);
+                  if (remainingAds.length === 0) {
+                      remainingAds = postAds; // If only one ad available, use it for both
+                  }
+                  
+                  const randomAdBottom = remainingAds[Math.floor(Math.random() * remainingAds.length)][1];
+                  
+                  // Create ad HTML for Bottom Ad
+                  let adHtmlBottom = '';
+                  if (randomAdBottom.type === 'video') {
+                      adHtmlBottom = `
+            <a href="${randomAdBottom.link}" target="_blank" style="display: block;">
+              <video autoplay loop muted playsinline style="width: 100%; max-height: 300px; border-radius: 5px;">
+                <source src="${randomAdBottom.image}" type="video/mp4">
+              </video>
+            </a>
+          `;
+                  } else {
+                      adHtmlBottom = `
+            <a href="${randomAdBottom.link}" target="_blank" style="display: block;">
+              <img src="${randomAdBottom.image}" style="width: 100%; max-height: 300px; object-fit: contain; border-radius: 5px;">
+            </a>
+          `;
+                  }
+                  
+                  adContainerBottom.innerHTML = adHtmlBottom;
+                  
+              } else {
+                  adContainerTop.innerHTML = '<p class="text-center">Advertisement</p>';
+                  adContainerBottom.innerHTML = '<p class="text-center">Advertisement</p>';
+              }
+          } else {
+              adContainerTop.innerHTML = '<p class="text-center">Advertisement</p>';
+              adContainerBottom.innerHTML = '<p class="text-center">Advertisement</p>';
+          }
+      });
+  }
+
+    // Initial load
+    window.addEventListener('load', () => {
+        setupRealtimeNotification();
+        loadPostDetails();
+        loadSocialLinks();
+        setupRealtimeComments();
+        loadPopupMessage();
+        loadAndDisplayPostAds();
+    });
+</script>
+</body>
+</html>
